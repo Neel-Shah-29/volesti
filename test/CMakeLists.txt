@@ -1,4 +1,3 @@
-
 # VolEsti (volume computation and sampling library)
 # Copyright (c) 2012-2020 Vissarion Fisikopoulos
 # Copyright (c) 2018-2020 Apostolos Chalkis
