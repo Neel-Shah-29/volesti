@@ -1,3 +1,4 @@
+
 # VolEsti (volume computation and sampling library)
 # Copyright (c) 2012-2020 Vissarion Fisikopoulos
 # Copyright (c) 2018-2020 Apostolos Chalkis
@@ -343,6 +344,20 @@ else ()
   TARGET_LINK_LIBRARIES(root_finders_test ${PTHREAD} ${GMP} ${MPSOLVE} ${FFTW3} ${MKL_LINK} coverage_config)
   TARGET_LINK_LIBRARIES(logconcave_sampling_test ${LP_SOLVE} ${IFOPT} ${IFOPT_IPOPT} ${PTHREAD} ${GMP} ${MPSOLVE} ${FFTW3} ${MKL_LINK} coverage_config)
   TARGET_LINK_LIBRARIES(order_polytope ${LP_SOLVE} coverage_config)
+ 
+  add_custom_target(chkdeps)
 
+  file(GLOB HDR_ROOT "*.hpp")
+  FOREACH (HDR ${HDR_ROOT})
+      message(STATUS "${HDR}")
+      get_filename_component(HDR_WE ${HDR} NAME_WE)
+      SET(CHK_TARGET "${HDR_WE}.chk")
+      add_custom_target(
+          ${CHK_TARGET}
+          COMMAND ${CMAKE_CXX_COMPILER} -c ${HDR}
+          VERBATIM
+      )
+      add_dependencies(chkdeps ${CHK_TARGET})
+  ENDFOREACH ()
 
 endif()
